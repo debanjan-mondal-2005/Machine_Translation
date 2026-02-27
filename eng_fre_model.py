@@ -1,13 +1,38 @@
-import joblib
-import tensorflow as tf
-from keras.preprocessing.sequence import pad_sequences
+import pickle
+import dill
+import sys
+import tf_keras as keras
+import tf_keras.preprocessing.text
 import numpy as np
+from pathlib import Path
 
-#engtofremodel = tf.keras.models.load_model(r"D:\Language Translator using LSTM\Models\EnglishToFrench.h5")
-encoder_model = tf.keras.models.load_model(r"D:\Language Translator using LSTM\Models\en-frencoder.h5")
-decoder_model = tf.keras.models.load_model(r"D:\Language Translator using LSTM\Models\en-frdecoder.h5")
-input_tokenizer = joblib.load(r"D:\Language Translator using LSTM\Models\en-frInputTokenizer.pkl")
-output_tokenizer = joblib.load(r"D:\Language Translator using LSTM\Models\en-frOutputTokenizer.pkl")
+class _KerasUnpickler(dill.Unpickler):
+    def find_class(self, module, name):
+        if 'keras.src.preprocessing' in module:
+            module = module.replace('keras.src.preprocessing', 'tf_keras.preprocessing')
+        elif module.startswith('keras.preprocessing'):
+            module = module.replace('keras.preprocessing', 'tf_keras.preprocessing', 1)
+        return super().find_class(module, name)
+
+def _safe_load(path):
+    with open(path, 'rb') as f:
+        return _KerasUnpickler(f).load()
+
+def pad_sequences(sequences, maxlen, padding='pre', value=0):
+    result = np.full((len(sequences), maxlen), value, dtype='int32')
+    for i, seq in enumerate(sequences):
+        seq = seq[:maxlen]
+        if padding == 'pre':
+            result[i, maxlen - len(seq):] = seq
+        else:
+            result[i, :len(seq)] = seq
+    return result
+
+_MODELS = Path(__file__).parent / "Models"
+encoder_model = keras.models.load_model(str(_MODELS / "en-frencoder.h5"))
+decoder_model = keras.models.load_model(str(_MODELS / "en-frdecoder.h5"))
+input_tokenizer = _safe_load(str(_MODELS / "en-frInputTokenizer.pkl"))
+output_tokenizer = _safe_load(str(_MODELS / "en-frOutputTokenizer.pkl"))
 
 
 max_input_len = 4

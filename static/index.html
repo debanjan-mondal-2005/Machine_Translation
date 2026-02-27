@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Language Translator</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="bg-blur"></div>
+
+  <div class="container">
+    <div class="header">
+      <div class="logo">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+        </svg>
+      </div>
+      <h1>Language Translator</h1>
+      <p class="subtitle">Powered by LSTM Neural Networks</p>
+    </div>
+
+    <div class="card">
+      <div class="textarea-group">
+        <label for="inputText">Enter Text</label>
+        <textarea id="inputText" placeholder="Type something to translate..." rows="4"></textarea>
+      </div>
+
+      <div class="lang-row">
+        <div class="lang-group">
+          <label for="sourceLang">Source Language</label>
+          <div class="select-wrapper">
+            <select id="sourceLang">
+              <option value="English" selected>English</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="swap-btn" id="swapBtn" title="Swap languages" disabled style="opacity:0.3;cursor:not-allowed;">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M7 16V4m0 0L3 8m4-4l4 4"/><path d="M17 8v12m0 0l4-4m-4 4l-4-4"/>
+          </svg>
+        </button>
+
+        <div class="lang-group">
+          <label for="targetLang">Target Language</label>
+          <div class="select-wrapper">
+            <select id="targetLang">
+              <option value="" disabled selected>Select language</option>
+              <option value="Tamil">Tamil</option>
+              <option value="French">French</option>
+              <option value="Spanish">Spanish</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <button class="translate-btn" id="translateBtn">
+        <span id="btnText">Translate</span>
+        <div class="spinner" id="spinner"></div>
+      </button>
+    </div>
+
+    <div class="result-card" id="resultCard">
+      <div class="result-block">
+        <div class="result-label" id="srcLabel">Source</div>
+        <div class="result-text" id="inputResult"></div>
+      </div>
+      <div class="result-divider">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </div>
+      <div class="result-block">
+        <div class="result-label" id="tgtLabel">Translation</div>
+        <div class="result-text" id="outputResult"></div>
+      </div>
+    </div>
+
+    <div class="error-card" id="errorCard">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <span id="errorMsg"></span>
+    </div>
+
+    <div class="supported">
+      <p>Supported: English → Tamil &nbsp;|&nbsp; English → French &nbsp;|&nbsp; English → Spanish</p>
+    </div>
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
