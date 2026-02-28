@@ -224,7 +224,6 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ## 🙏 Acknowledgments
 
-- Original LSTM translation model architecture
 - TensorFlow and Keras teams
 - FastAPI framework developers
 - Open-source NLP community
